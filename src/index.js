@@ -12,6 +12,7 @@ import Routes from './routes'
 ReactDOM.render(
   <Provider store={store}>
     <Routes />
-  </Provider>, document.getElementById('root'))
+  </Provider>, document.getElementById('root')
+)
 
 serviceWorker.unregister()
