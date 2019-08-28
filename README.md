@@ -2,6 +2,14 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 ### Style Guides
 For this project consider to use StandardJS as Javascript Code Style Guide and BEM as CSS Code Style Guide
 
+## Environment Setup
+Before run this project you need to setup the environment variables in a .env file as above:
+``bash
+  REACT_APP_BASE_URL=BASE_ENDPOINTS_URL
+  REACT_APP_MARVEL_SECRET=SECRET_KEY_FROM_MARVEL
+  REACT_APP_MARVEL_PUBLIC=PUBLIC_KEY_FROM_MARVEL
+``
+
 ## Available Scripts
 
 In the project directory, you can run:
