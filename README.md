@@ -1,4 +1,6 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+### Style Guides
+For this project consider to use StandardJS as Javascript Code Style Guide and BEM as CSS Code Style Guide
 
 ## Available Scripts
 
