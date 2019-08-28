@@ -9,13 +9,15 @@ export const character = {
   state: initialState,
   reducers: {
     setList (state, payload) {
-      return { ...state, list: payload }
+      return { ...state, list: payload.data.results }
     }
   },
   effects: (dispatch) => ({
     async loadList (payload, rootState) {
       characterService.list()
-        .then(response => this.setList(response.data.data.results))
+        .then(({ data }) => {
+          this.setList(data)
+        })
         .catch(e => console.error(e))
     }
   })
