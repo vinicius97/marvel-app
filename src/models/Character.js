@@ -1,14 +1,11 @@
-// Axios interceptor
-import { http } from '../services/axios.interceptor'
-
-// Constants
-import { character } from '../constants/Endpoints'
+// Services
+import { character as characterService } from '../services'
 
 const initialState = {
   list: []
 }
 
-export const Character = {
+export const character = {
   state: initialState,
   reducers: {
     setList (state, payload) {
@@ -17,7 +14,7 @@ export const Character = {
   },
   effects: (dispatch) => ({
     async loadList (payload, rootState) {
-      await http.get(character().list)
+      characterService.list()
         .then(response => this.setList(response.data.data.results))
         .catch(e => console.error(e))
     }

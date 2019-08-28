@@ -33,7 +33,6 @@ class ListContainer extends PureComponent {
 
   render () {
     const { list } = this.state
-    console.log(list)
 
     return (
       <List characters={list} />
@@ -42,10 +41,10 @@ class ListContainer extends PureComponent {
 }
 
 const mapState = state => ({
-  list: state.Character.list
+  list: state.character.list
 })
 
-const mapDispatch = ({ Character: { loadList } }) => ({
+const mapDispatch = ({ character: { loadList } }) => ({
   loadList: () => loadList()
 })
 

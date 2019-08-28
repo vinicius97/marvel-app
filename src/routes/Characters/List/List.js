@@ -3,7 +3,7 @@ import React from 'react'
 export function List ({ characters }) {
   return (
     <div>
-      {characters.map(item => item.id)}
+      {characters.map(item => item.name)}
     </div>
   )
 }
