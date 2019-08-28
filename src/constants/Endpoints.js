@@ -1,6 +1,6 @@
 export const BaseURL = process.env.REACT_APP_BASE_URL
 
-export const characters = (id) => (
+export const character = (id) => (
   {
     character: {
       list: `${BaseURL}/characters`,
