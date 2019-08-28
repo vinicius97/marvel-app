@@ -5,7 +5,7 @@ import { http } from '../services/axios.interceptor'
 import { character } from '../constants/Endpoints'
 
 const initialState = {
-  list: null
+  list: []
 }
 
 export const Character = {
@@ -16,9 +16,10 @@ export const Character = {
     }
   },
   effects: (dispatch) => ({
-    async list (payload, rootState) {
-      const response = await http.get(character.list)
-      this.setList(response.data)
+    async loadList (payload, rootState) {
+      await http.get(character().list)
+        .then(response => this.setList(response.data.data.results))
+        .catch(e => console.error(e))
     }
   })
 }
