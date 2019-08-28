@@ -1,4 +1,4 @@
-export const BaseURL = process.env.REACT_APP_BASE_URL
+export const BaseURL = process.env.REACT_APP_BASE_URL || 'https://gateway.marvel.com/v1/public'
 
 export const character = (id) => (
   {
