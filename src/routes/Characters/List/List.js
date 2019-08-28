@@ -1,15 +1,15 @@
 import React from 'react'
 
-export function List ({ list }) {
+export function List ({ characters }) {
   return (
     <div>
-      {list.map(item => item.id)}
+      {characters.map(item => item.id)}
     </div>
   )
 }
 
 List.defaultProps = {
-  list: []
+  characters: []
 }
 
 export default List
