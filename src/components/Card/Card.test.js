@@ -28,8 +28,11 @@ describe('[Component][Card]', () => {
     // render thumbnail
     expect(wrap.find(`.${prefix}-card`)).toBeDefined()
     expect(wrap.find(`.${prefix}-card__thumbnail`)).toBeDefined()
-    expect(wrap.find(`.${prefix}-card__thumbnail__img`)).toBeDefined()
-    expect(wrap.find(`.${prefix}-card__thumbnail__img`).getDOMNode()).toHaveProperty('src', customProperties.thumbnail)
+
+    const thumbnailImage = wrap.find(`.${prefix}-card__thumbnail__img`)
+    expect(thumbnailImage).toBeDefined()
+    expect(thumbnailImage.getDOMNode()).toHaveProperty('src', customProperties.thumbnail)
+    expect(thumbnailImage.getDOMNode()).toHaveProperty('alt', customProperties.title)
 
     // render title
     expect(wrap.find(`.${prefix}-card__title`)).toBeDefined()

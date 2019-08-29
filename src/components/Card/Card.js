@@ -12,9 +12,9 @@ function Card ({ title, thumbnail }) {
           <img src={thumbnail} alt={title} className={`${prefix}-card__thumbnail__img`} />
         </div>
       )}
-      <div className={`${prefix}-card__title`}>
+      <span className={`${prefix}-card__title`}>
         {title}
-      </div>
+      </span>
     </div>
   )
 }
