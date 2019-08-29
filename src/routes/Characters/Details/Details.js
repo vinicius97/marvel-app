@@ -1,11 +1,22 @@
 import React from 'react'
 
+// Components
+import { Card } from '../../../components'
+
 export function Details ({ character }) {
-  console.log(character)
+  const { thumbnail, name, series } = character
+  const thumbnailSrc = thumbnail && `${thumbnail.path}.${thumbnail.extension}`
 
   return (
     <div>
-      Detalhes
+      <Card thumbnail={thumbnailSrc} title={name} />
+
+      Series
+      {series && series.items.map((serie, key) => (
+        <div key={key}>
+          <span>{serie.name}</span>
+        </div>
+      ))}
     </div>
   )
 }
