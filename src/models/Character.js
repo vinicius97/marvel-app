@@ -17,8 +17,17 @@ export const character = {
     }
   },
   effects: (dispatch) => ({
-    async loadList (payload, rootState) {
-      characterService.list()
+    async loadList ({ nameStartsWith }, rootState) {
+      let parameters = {}
+
+      if(nameStartsWith) {
+        parameters = {
+          ...parameters,
+          nameStartsWith
+        }
+      }
+
+      characterService.list(parameters)
         .then(({ data }) => {
           this.setList(data)
         })

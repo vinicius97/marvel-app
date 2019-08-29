@@ -13,8 +13,8 @@ class ListContainer extends PureComponent {
     list: []
   }
 
-  loadCharactersList = () => {
-    this.props.loadList()
+  loadCharactersList = (nameStartsWith = null) => {
+    this.props.loadList({ nameStartsWith })
   }
 
   static getDerivedStateFromProps (nextProps, prevState) {
@@ -35,7 +35,10 @@ class ListContainer extends PureComponent {
     const { list } = this.state
 
     return (
-      <List characters={list} />
+      <>
+        <input type="text" onChange={(e) => this.loadCharactersList(e.target.value)} />
+        <List characters={list} />
+      </>
     )
   }
 }
@@ -45,7 +48,7 @@ const mapState = state => ({
 })
 
 const mapDispatch = ({ character: { loadList } }) => ({
-  loadList: () => loadList()
+  loadList
 })
 
 export default connect(mapState, mapDispatch)(ListContainer)
