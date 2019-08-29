@@ -9,11 +9,11 @@ import { CharactersRoutes } from './Characters'
 
 function AppRouter () {
   return (
-    <Theme>
-      <Router>
+    <Router>
+      <Theme>
         <Route path='/' component={CharactersRoutes} />
-      </Router>
-    </Theme>
+      </Theme>
+    </Router>
   )
 }
 

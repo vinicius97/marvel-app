@@ -12,8 +12,17 @@ body {
 .#{$prefix} {
   background-color: $background-color;
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   height: 100vh;
   overflow-y: auto;
   width: 100vw;
+
+  &__logo {
+    display: flex;
+    margin: 20px auto;
+  }
+
+  &__page {
+    display: flex;
+  }
 }
