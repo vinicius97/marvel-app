@@ -1,4 +1,8 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
+
+// Constants
+import { CharactersRoutes } from '../../../constants/Routes'
 
 // Components
 import { Card } from '../../../components'
@@ -15,7 +19,11 @@ export function List ({ characters }) {
           series
         }
 
-        return <Card {...properties} key={key} />
+        return (
+          <Link to={`${CharactersRoutes.details.replace(':id', id)}`} key={key}>
+            <Card {...properties} />
+          </Link>
+        )
       })}
     </>
   )
