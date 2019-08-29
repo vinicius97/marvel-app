@@ -1,6 +1,8 @@
 import React from 'react'
 
-export function Details () {
+export function Details ({ character }) {
+  console.log(character)
+
   return (
     <div>
       Detalhes

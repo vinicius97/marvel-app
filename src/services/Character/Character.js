@@ -19,5 +19,14 @@ export const character = {
     }
 
     return http.get(characterConstants().list, queryParameters)
+  },
+  get: (id) => {
+    const queryParameters = {
+      params: {
+        id
+      }
+    }
+
+    return http.get(characterConstants(id).details, queryParameters)
   }
 }
