@@ -36,8 +36,7 @@ class ListContainer extends PureComponent {
 
     return (
       <>
-        <input type="text" onChange={(e) => this.loadCharactersList(e.target.value)} />
-        <List characters={list} />
+        <List characters={list} onSearch={this.loadCharactersList} />
       </>
     )
   }

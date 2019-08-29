@@ -1,0 +1,26 @@
+@import "../../../variables";
+
+.#{$prefix}-characters-list {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+
+  &__cards {
+    display: flex;
+    flex-basis: 250px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  &__search-input {
+    margin: auto;
+    width: 400px;
+    max-width: 100%;
+    height: 40px;
+    border: none;
+    background-color: rgba(0,0,0,0.1);
+    color: $color-100
+  }
+}
