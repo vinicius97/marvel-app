@@ -20,7 +20,7 @@ export const character = {
     async loadList ({ nameStartsWith }, rootState) {
       let parameters = {}
 
-      if(nameStartsWith) {
+      if (nameStartsWith) {
         parameters = {
           ...parameters,
           nameStartsWith
