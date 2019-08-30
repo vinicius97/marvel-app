@@ -32,8 +32,6 @@ export class Paginator extends PureComponent {
       offset = maximumOffset
     }
 
-    console.log(nextPage, limit, maximumOffset, totalPages)
-
     await this.setState({
       page: nextPage
     })
@@ -42,19 +40,19 @@ export class Paginator extends PureComponent {
   }
 
   handlePreviousPage = async () => {
-    let page
+    const { page, limit } = this.state
+    let previousPage =  page - 1
+    let offset = limit * previousPage
 
-    await this.setState(state => {
-      page = state.page - 1
-      if(page <= 0) {
-        page = 1
-      }
-      return {
-        page
-      }
+    if(previousPage <= 0) {
+      previousPage = 1
+    }
+
+    await this.setState({
+      page: previousPage
     })
 
-    this.props.onPreviousPage(page)
+    this.props.onPreviousPage(offset)
   }
 
   handleProperties = () => {
