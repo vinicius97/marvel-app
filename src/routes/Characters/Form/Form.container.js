@@ -14,7 +14,7 @@ class FormContainer extends PureComponent {
   }
 
   loadCharacterDetails = (id) => {
-    this.props.loadById({ id })
+    this.props.findById({ id })
   }
 
   handleOnSave = (data) => {
@@ -33,13 +33,11 @@ class FormContainer extends PureComponent {
 
   componentDidMount () {
     const id = this.props.match.params.id
-    this.loadCharacterDetails(id)
+    this.loadCharacterDetails(parseInt(id))
   }
 
   render () {
     const { character } = this.state
-
-    console.log(character, 'character')
 
     return character && (
       <Form character={character} onSubmit={this.handleOnSave} />
@@ -51,8 +49,8 @@ const mapState = state => ({
   character: state.character.actual
 })
 
-const mapDispatch = ({ character: { loadById, update } }) => ({
-  loadById,
+const mapDispatch = ({ character: { findById, update } }) => ({
+  findById,
   update
 })
 

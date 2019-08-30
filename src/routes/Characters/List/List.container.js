@@ -14,7 +14,7 @@ class ListContainer extends PureComponent {
   }
 
   loadCharactersList = (nameStartsWith = null) => {
-    this.props.loadList({ nameStartsWith })
+    this.props.find({ nameStartsWith })
   }
 
   static getDerivedStateFromProps (nextProps, prevState) {
@@ -46,8 +46,8 @@ const mapState = state => ({
   list: state.character.list
 })
 
-const mapDispatch = ({ character: { loadList } }) => ({
-  loadList
+const mapDispatch = ({ character: { find } }) => ({
+  find
 })
 
 export default connect(mapState, mapDispatch)(ListContainer)

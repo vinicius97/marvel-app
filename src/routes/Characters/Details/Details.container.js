@@ -14,7 +14,7 @@ class DetailsContainer extends PureComponent {
   }
 
   loadCharacterDetails = (id) => {
-    this.props.loadById({ id })
+    this.props.findById({ id })
   }
 
   static getDerivedStateFromProps (nextProps, prevState) {
@@ -29,13 +29,13 @@ class DetailsContainer extends PureComponent {
 
   componentDidMount () {
     const id = this.props.match.params.id
-    this.loadCharacterDetails(id)
+    this.loadCharacterDetails(parseInt(id))
   }
 
   render () {
     const { character } = this.state
 
-    return (
+    return character && (
       <Details character={character} />
     )
   }
@@ -45,8 +45,8 @@ const mapState = state => ({
   character: state.character.actual
 })
 
-const mapDispatch = ({ character: { loadById } }) => ({
-  loadById
+const mapDispatch = ({ character: { findById } }) => ({
+  findById
 })
 
 export default connect(mapState, mapDispatch)(DetailsContainer)

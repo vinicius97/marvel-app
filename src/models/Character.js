@@ -11,17 +11,34 @@ export const character = {
   state: initialState,
   reducers: {
     setActualCharacter (state, payload) {
-      return { ...state, actual: payload.data.results[0] }
+      return { ...state, actual: payload }
     },
     setList (state, payload) {
-      return { ...state, list: payload.data.results }
+      const customCharacters = state.customCharacters
+      const list = payload
+
+      // Replace if any character has already been edited on client side
+      const customList = list.reduce(
+        (result, character) => {
+          const customCharacter = customCharacters.find(custom => (custom.id === character.id))
+
+          if (customCharacter) {
+            result.push(customCharacter)
+          } else {
+            result.push(character)
+          }
+
+          return result
+        }, [])
+
+      return { ...state, list: customList }
     },
     setCustomCharacter (state, payload) {
-      return { ...state, customCharacters: [ ...state.customCharacters, payload] }
+      return { ...state, customCharacters: [...state.customCharacters, payload] }
     }
   },
   effects: (dispatch) => ({
-    async loadList ({ nameStartsWith }, rootState) {
+    async find ({ nameStartsWith }, rootState) {
       let parameters = {}
 
       if (nameStartsWith) {
@@ -31,22 +48,36 @@ export const character = {
         }
       }
 
+      const customCharacters = rootState.character.customCharacters
+      const customCharactersResult = customCharacters.filter(character => character.name.includes(nameStartsWith))
+
       characterService.list(parameters)
         .then(({ data }) => {
-          this.setList(data)
+          const results = data.data.results
+          results.push(...customCharactersResult)
+          this.setList(results)
         })
         .catch(e => console.error(e))
     },
-    async loadById ({ id }, rootState) {
-      characterService.get(id)
-        .then(({ data }) => {
-          this.setActualCharacter(data)
-        })
-        .catch(e => console.error(e))
+    async findById ({ id }, rootState) {
+      const customCharacters = rootState.character.customCharacters
+      const customCharacter = customCharacters.find(character => character.id === id)
+
+      // Check if character has been edited on client side
+      if (customCharacter) {
+        this.setActualCharacter(customCharacter)
+      } else {
+        characterService.get(id)
+          .then(({ data }) => {
+            const results = data.data.results
+            this.setActualCharacter(results[0])
+          })
+          .catch(e => console.error(e))
+      }
     },
-    async update (payload, rootSate) {
+    async update (payload, rootState) {
       const updatedCharacter = payload
-      const customCharacters = rootSate.character.customCharacters
+      const customCharacters = rootState.character.customCharacters
       const hasBeenUpdatedBefore = (customCharacters.filter(character => character.id === payload.id).length > 0)
 
       if (hasBeenUpdatedBefore) {
