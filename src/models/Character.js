@@ -14,24 +14,7 @@ export const character = {
       return { ...state, actual: payload }
     },
     setList (state, payload) {
-      const customCharacters = state.customCharacters
-      const list = payload
-
-      // Replace if any character has already been edited on client side
-      const customList = list.reduce(
-        (result, character) => {
-          const customCharacter = customCharacters.find(custom => (custom.id === character.id))
-
-          if (customCharacter) {
-            result.push(customCharacter)
-          } else {
-            result.push(character)
-          }
-
-          return result
-        }, [])
-
-      return { ...state, list: customList }
+      return { ...state, list: payload }
     },
     setCustomCharacter (state, payload) {
       return { ...state, customCharacters: [...state.customCharacters, payload] }
@@ -48,14 +31,36 @@ export const character = {
         }
       }
 
-      const customCharacters = rootState.character.customCharacters
-      const customCharactersResult = customCharacters.filter(character => character.name.includes(nameStartsWith))
-
       characterService.list(parameters)
         .then(({ data }) => {
           const results = data.data.results
-          results.push(...customCharactersResult)
-          this.setList(results)
+
+          // Replace if any character has already been edited on client side
+          const customCharacters = rootState.character.customCharacters
+          const customResults = results.reduce((result, character) => {
+            if (nameStartsWith) {
+              const customCharactersResult = customCharacters.filter(character => character.name.includes(nameStartsWith))
+              const customCharacter = customCharactersResult.find(custom => (custom.id === character.id))
+
+              if (customCharacter) {
+                result.push(customCharacter)
+              } else {
+                result.push(character)
+              }
+            } else {
+              const customCharacter = customCharacters.find(custom => (custom.id === character.id))
+
+              if (customCharacter) {
+                result.push(customCharacter)
+              } else {
+                result.push(character)
+              }
+            }
+
+            return result
+          }, [])
+
+          this.setList(customResults)
         })
         .catch(e => console.error(e))
     },
