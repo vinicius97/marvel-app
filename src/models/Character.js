@@ -4,7 +4,8 @@ import { character as characterService } from '../services'
 const initialState = {
   actual: null,
   list: [],
-  customCharacters: []
+  customCharacters: [],
+  total: 0
 }
 
 export const character = {
@@ -12,6 +13,9 @@ export const character = {
   reducers: {
     setActualCharacter (state, payload) {
       return { ...state, actual: payload }
+    },
+    setTotalCharacteres (state, payload) {
+      return { ...state, total: payload}
     },
     setList (state, payload) {
       return { ...state, list: payload }
@@ -34,6 +38,9 @@ export const character = {
       characterService.list(parameters)
         .then(({ data }) => {
           const results = data.data.results
+          const total = data.data.total
+
+          this.setTotalCharacteres(total)
 
           // Replace if any character has already been edited on client side
           const customCharacters = rootState.character.customCharacters

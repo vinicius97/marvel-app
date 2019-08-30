@@ -2,16 +2,17 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 // Constants
+import { defaultRequestParameters } from '../../../constants/Endpoints'
 import { CharactersRoutes } from '../../../constants/Routes'
 import { prefix } from '../../../constants/Components'
 
 // Components
-import { Card } from '../../../components'
+import { Card, Paginator } from '../../../components'
 
 // Styles
 import './List.scss'
 
-export function List ({ characters, onSearch }) {
+export function List ({ characters, onSearch, onNextPage, onPreviousPage, total }) {
   return (
     <div className={`${prefix}-characters-list`}>
       <input
@@ -37,12 +38,14 @@ export function List ({ characters, onSearch }) {
           )
         })}
       </div>
+      <Paginator onNextPage={onNextPage} onPreviousPage={onPreviousPage} limit={defaultRequestParameters.limit} total={total} />
     </div>
   )
 }
 
 List.defaultProps = {
-  characters: []
+  characters: [],
+  total: 0
 }
 
 export default List

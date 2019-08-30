@@ -6,15 +6,22 @@ import List from './List'
 
 class ListContainer extends PureComponent {
   state = {
-    list: []
+    list: [],
+    total: 0
   }
 
   static defaultProps = {
-    list: []
+    list: [],
+    total: 0
   }
 
-  loadCharactersList = (nameStartsWith = null) => {
+  loadCharactersList = (nameStartsWith = null, offset) => {
     this.props.find({ nameStartsWith })
+  }
+
+  handleChangePage = (offset) => {
+    console.log(offset)
+    this.loadCharactersList(null, offset)
   }
 
   static getDerivedStateFromProps (nextProps, prevState) {
@@ -22,6 +29,10 @@ class ListContainer extends PureComponent {
 
     if (prevState.list !== nextProps.list) {
       state.list = nextProps.list
+    }
+
+    if (prevState.total !== nextProps.total) {
+      state.total = nextProps.total
     }
 
     return state
@@ -32,18 +43,24 @@ class ListContainer extends PureComponent {
   }
 
   render () {
-    const { list } = this.state
+    const { list, total } = this.state
 
     return (
       <>
-        <List characters={list} onSearch={this.loadCharactersList} />
+        <List
+          total={total}
+          characters={list}
+          onSearch={this.loadCharactersList}
+          onNextPage={this.handleChangePage}
+          onPreviousPage={this.handleChangePage} />
       </>
     )
   }
 }
 
 const mapState = state => ({
-  list: state.character.list
+  list: state.character.list,
+  total: state.character.total
 })
 
 const mapDispatch = ({ character: { find } }) => ({

@@ -1,6 +1,6 @@
 import mockAxios from 'axios'
-import { character as characterService, defaultRequestParameters } from './Character'
-import { character as characterEndpoint } from '../../constants/Endpoints'
+import { character as characterService } from './Character'
+import { character as characterEndpoint, defaultRequestParameters } from '../../constants/Endpoints'
 
 describe('[Characters]: All scopes', () => {
   afterEach(() => {

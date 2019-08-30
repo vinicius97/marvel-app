@@ -7,3 +7,8 @@ export const character = (id) => (
     series: `${BaseURL}/characters/${id}/series`
   }
 )
+
+export const defaultRequestParameters = {
+  limit: 9,
+  offset: 0
+}
