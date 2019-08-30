@@ -39,14 +39,23 @@ export const character = {
           const customCharacters = rootState.character.customCharacters
           const customResults = results.reduce((result, character) => {
             if (nameStartsWith) {
-              const customCharactersResult = customCharacters.filter(character => character.name.includes(nameStartsWith))
-              const customCharacter = customCharactersResult.find(custom => (custom.id === character.id))
-
-              if (customCharacter) {
-                result.push(customCharacter)
-              } else {
-                result.push(character)
-              }
+              // Filter all custom characters that has the search key in name property
+              customCharacters.filter(custom => {
+                if (custom.name.includes(nameStartsWith)) {
+                  if (custom.id === character.id) {
+                    result.push(custom)
+                  } else {
+                    let hasCharacterInResult = result.find(c => c === character)
+                    if (!hasCharacterInResult) {
+                      result.push(character)
+                    }
+                    hasCharacterInResult = result.find(c => c === custom)
+                    if (!hasCharacterInResult) {
+                      result.push(custom)
+                    }
+                  }
+                }
+              })
             } else {
               const customCharacter = customCharacters.find(custom => (custom.id === character.id))
 
