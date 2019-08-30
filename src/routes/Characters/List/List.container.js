@@ -15,8 +15,8 @@ class ListContainer extends PureComponent {
     total: 0
   }
 
-  loadCharactersList = (nameStartsWith = null, offset) => {
-    this.props.find({ nameStartsWith })
+  loadCharactersList = (nameStartsWith = null, offset = null) => {
+    this.props.find({ nameStartsWith, offset })
   }
 
   handleChangePage = (offset) => {

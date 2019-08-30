@@ -1,5 +1,11 @@
 import React, { PureComponent } from 'react'
 
+// Constants
+import { prefix } from '../../constants/Components'
+
+// Styles
+import './Paginator.scss'
+
 export class Paginator extends PureComponent {
   state = {
     page: 1,
@@ -25,6 +31,8 @@ export class Paginator extends PureComponent {
     if(offset > maximumOffset) {
       offset = maximumOffset
     }
+
+    console.log(nextPage, limit, maximumOffset, totalPages)
 
     await this.setState({
       page: nextPage
@@ -60,6 +68,17 @@ export class Paginator extends PureComponent {
     })
   }
 
+  static getDerivedStateFromProps (nextProps, prevState) {
+    let state = {}
+
+    if (prevState.total !== nextProps.total) {
+      state.total = nextProps.total
+      state.totalPages = Math.ceil(nextProps.total/nextProps.limit)
+    }
+
+    return state
+  }
+
   componentDidMount () {
     this.handleProperties()
   }
@@ -68,10 +87,16 @@ export class Paginator extends PureComponent {
     const { page } = this.state
 
     return (
-      <div>
-        <div onClick={this.handlePreviousPage}> Anterior </div>
-        <div> {page} </div>
-        <div onClick={this.handleNextPage}> Próxima </div>
+      <div className={`${prefix}-paginator`}>
+        <div className={`${prefix}-paginator__nav-button`} onClick={this.handlePreviousPage} role='button'>
+          Anterior
+        </div>
+        <div className={`${prefix}-paginator__actual-page`}>
+          {page}
+        </div>
+        <div className={`${prefix}-paginator__nav-button`} onClick={this.handleNextPage} role='button'>
+          Próxima
+        </div>
       </div>
     )
   }

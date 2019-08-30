@@ -25,7 +25,7 @@ export const character = {
     }
   },
   effects: (dispatch) => ({
-    async find ({ nameStartsWith }, rootState) {
+    async find ({ nameStartsWith, offset }, rootState) {
       let parameters = {}
 
       if (nameStartsWith) {
@@ -35,10 +35,19 @@ export const character = {
         }
       }
 
+      if (offset) {
+        parameters = {
+          ...parameters,
+          offset
+        }
+      }
+
       characterService.list(parameters)
         .then(({ data }) => {
           const results = data.data.results
           const total = data.data.total
+
+          console.log(total, 'total')
 
           this.setTotalCharacteres(total)
 

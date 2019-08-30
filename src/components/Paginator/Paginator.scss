@@ -1,0 +1,22 @@
+@import "../../variables";
+
+.#{$prefix}-paginator {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  margin: 30px;
+
+  &__actual-page {
+    background-color: $color-300;
+    color: $color-100;
+    margin: 0 10px;
+    padding: 10px;
+  }
+
+  &__nav-button {
+    background-color: $color-300;
+    color: $color-100;
+    cursor: pointer;
+    padding: 10px;
+  }
+}
