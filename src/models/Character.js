@@ -38,36 +38,33 @@ export const character = {
           // Replace if any character has already been edited on client side
           const customCharacters = rootState.character.customCharacters
           const customResults = results.reduce((result, character) => {
-            if (nameStartsWith) {
-              // Filter all custom characters that has the search key in name property
-              customCharacters.filter(custom => {
-                if (custom.name.includes(nameStartsWith)) {
-                  if (custom.id === character.id) {
-                    result.push(custom)
-                  } else {
-                    let hasCharacterInResult = result.find(c => c === character)
-                    if (!hasCharacterInResult) {
-                      result.push(character)
-                    }
-                    hasCharacterInResult = result.find(c => c === custom)
-                    if (!hasCharacterInResult) {
-                      result.push(custom)
-                    }
-                  }
-                }
-              })
-            } else {
-              const customCharacter = customCharacters.find(custom => (custom.id === character.id))
+            const customCharacter = customCharacters.find(custom => (custom.id === character.id))
 
-              if (customCharacter) {
-                result.push(customCharacter)
+            if (customCharacter) {
+              // Check if custom character match with search term
+              if (nameStartsWith) {
+                if (customCharacter.name.includes(nameStartsWith)) {
+                  result.push(customCharacter)
+                }
               } else {
-                result.push(character)
+                result.push(customCharacter)
               }
+            } else {
+              result.push(character)
             }
 
             return result
           }, [])
+
+          // Include all possible responses from client side custom characters
+          customCharacters.map(character => {
+            const hasCharacterInResults = results.find(c => c.id === character.id)
+            if (!hasCharacterInResults) {
+              if (character.name.includes(nameStartsWith)) {
+                customResults.push(character)
+              }
+            }
+          })
 
           this.setList(customResults)
         })
