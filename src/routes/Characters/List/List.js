@@ -7,7 +7,7 @@ import { CharactersRoutes } from '../../../constants/Routes'
 import { prefix } from '../../../constants/Components'
 
 // Components
-import { Card, Paginator } from '../../../components'
+import { Card, Paginator, Search } from '../../../components'
 
 // Styles
 import './List.scss'
@@ -15,11 +15,7 @@ import './List.scss'
 export function List ({ characters, onSearch, onNextPage, onPreviousPage, total }) {
   return (
     <div className={`${prefix}-characters-list`}>
-      <input
-        className={`${prefix}-characters-list__search-input`}
-        type='text'
-        onChange={(e) => onSearch(e.target.value)}
-      />
+      <Search onSearch={onSearch} />
 
       <div className={`${prefix}-characters-list__cards`}>
         {characters.map((item, key) => {
@@ -38,7 +34,13 @@ export function List ({ characters, onSearch, onNextPage, onPreviousPage, total 
           )
         })}
       </div>
-      <Paginator onNextPage={onNextPage} onPreviousPage={onPreviousPage} limit={defaultRequestParameters.limit} total={total} />
+
+      <Paginator
+        onNextPage={onNextPage}
+        onPreviousPage={onPreviousPage}
+        limit={defaultRequestParameters.limit}
+        total={total}
+      />
     </div>
   )
 }

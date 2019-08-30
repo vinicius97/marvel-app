@@ -53,8 +53,6 @@ export class Paginator extends PureComponent {
       page: previousPage
     })
 
-    console.log(offset)
-
     this.props.onPreviousPage(offset)
   }
 
