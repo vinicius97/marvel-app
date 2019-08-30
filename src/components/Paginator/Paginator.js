@@ -8,14 +8,14 @@ import './Paginator.scss'
 
 export class Paginator extends PureComponent {
   state = {
-    page: 1,
+    page: 0,
     totalPages: 0,
     total: 0,
     limit: 0
   }
 
   static defaultProps = {
-    page: 1,
+    page: 0,
     total: 0,
     limit: 0,
     onNextPage: () => {},
@@ -44,13 +44,16 @@ export class Paginator extends PureComponent {
     let previousPage =  page - 1
     let offset = limit * previousPage
 
-    if(previousPage <= 0) {
-      previousPage = 1
+    if(previousPage < 0) {
+      previousPage = 0
+      offset = 0
     }
 
     await this.setState({
       page: previousPage
     })
+
+    console.log(offset)
 
     this.props.onPreviousPage(offset)
   }
@@ -90,7 +93,7 @@ export class Paginator extends PureComponent {
           Anterior
         </div>
         <div className={`${prefix}-paginator__actual-page`}>
-          {page}
+          {page + 1}
         </div>
         <div className={`${prefix}-paginator__nav-button`} onClick={this.handleNextPage} role='button'>
           Próxima
