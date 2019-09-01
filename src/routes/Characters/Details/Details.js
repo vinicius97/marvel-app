@@ -17,13 +17,20 @@ export function Details ({ character }) {
 
   return (
     <div className={`${prefix}-character-details`}>
+      <Link
+        className={`${prefix}-character-details__edit__button--back`}
+        to={`${CharactersRoutes.list}`}
+      >
+        Voltar
+      </Link>
+
       <div className={`${prefix}-character-details__header`}>
         <Card thumbnail={thumbnailSrc} title={name} />
       </div>
 
       <div className={`${prefix}-character-details__edit`}>
         <Link
-          className={`${prefix}-character-details__edit__button`}
+          className={`${prefix}-character-details__edit__button--edit`}
           to={`${CharactersRoutes.edit.replace(':id', id)}`}
         >
           Editar
