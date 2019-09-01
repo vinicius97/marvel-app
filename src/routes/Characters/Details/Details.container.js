@@ -3,10 +3,12 @@ import { connect } from 'react-redux'
 
 // Component
 import Details from './Details'
+import { Loader } from '../../../components/Loader'
 
 class DetailsContainer extends PureComponent {
   state = {
-    character: {}
+    character: {},
+    loading: false
   }
 
   static defaultProps = {
@@ -24,6 +26,10 @@ class DetailsContainer extends PureComponent {
       state.character = nextProps.character
     }
 
+    if (prevState.loading !== nextProps.loading) {
+      state.loading = nextProps.loading
+    }
+
     return state
   }
 
@@ -33,16 +39,20 @@ class DetailsContainer extends PureComponent {
   }
 
   render () {
-    const { character } = this.state
+    const { character, loading } = this.state
 
     return character && (
-      <Details character={character} />
+      <>
+        <Loader show={loading} />
+        <Details character={character} />
+      </>
     )
   }
 }
 
 const mapState = state => ({
-  character: state.character.actual
+  character: state.character.actual,
+  loading: state.character.loading
 })
 
 const mapDispatch = ({ character: { findById } }) => ({

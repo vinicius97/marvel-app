@@ -2,17 +2,20 @@ import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 
 // Component
+import { Loader } from '../../../components'
 import List from './List'
 
 class ListContainer extends PureComponent {
   state = {
     list: [],
-    total: 0
+    total: 0,
+    loading: false
   }
 
   static defaultProps = {
     list: [],
-    total: 0
+    total: 0,
+    loading: false
   }
 
   loadCharactersList = (nameStartsWith = null, offset = null) => {
@@ -20,7 +23,6 @@ class ListContainer extends PureComponent {
   }
 
   handleChangePage = (offset) => {
-    console.log(offset)
     this.loadCharactersList(null, offset)
   }
 
@@ -35,6 +37,10 @@ class ListContainer extends PureComponent {
       state.total = nextProps.total
     }
 
+    if (prevState.loading !== nextProps.loading) {
+      state.loading = nextProps.loading
+    }
+
     return state
   }
 
@@ -43,10 +49,11 @@ class ListContainer extends PureComponent {
   }
 
   render () {
-    const { list, total } = this.state
+    const { list, total, loading } = this.state
 
     return (
       <>
+        <Loader show={loading} />
         <List
           total={total}
           characters={list}
@@ -60,7 +67,8 @@ class ListContainer extends PureComponent {
 
 const mapState = state => ({
   list: state.character.list,
-  total: state.character.total
+  total: state.character.total,
+  loading: state.character.loading
 })
 
 const mapDispatch = ({ character: { find } }) => ({

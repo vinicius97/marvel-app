@@ -4,6 +4,7 @@ import { character as characterService } from '../services'
 const initialState = {
   actual: null,
   list: [],
+  loading: false,
   customCharacters: [],
   searchKey: null,
   total: 0
@@ -21,6 +22,9 @@ export const character = {
     setList (state, payload) {
       return { ...state, list: payload }
     },
+    setLoading (state, payload) {
+      return { ...state, loading: payload }
+    },
     setSearchKey (state, payload) {
       return { ...state, searchKey: payload }
     },
@@ -30,8 +34,9 @@ export const character = {
   },
   effects: (dispatch) => ({
     async find ({ nameStartsWith, offset }, rootState) {
-      let parameters = {}
+      this.setLoading(true)
 
+      let parameters = {}
       if (nameStartsWith) {
         parameters = {
           ...parameters,
@@ -96,8 +101,13 @@ export const character = {
           this.setList(customResults)
         })
         .catch(e => console.error(e))
+        .finally(() => {
+          this.setLoading(false)
+        })
     },
     async findById ({ id }, rootState) {
+      this.setLoading(true)
+
       const customCharacters = rootState.character.customCharacters
       const customCharacter = customCharacters.find(character => character.id === id)
 
@@ -111,6 +121,9 @@ export const character = {
             this.setActualCharacter(results[0])
           })
           .catch(e => console.error(e))
+          .finally(() => {
+            this.setLoading(false)
+          })
       }
     },
     async update (payload, rootState) {
