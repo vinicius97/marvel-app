@@ -89,7 +89,7 @@ export const character = {
           }, [])
 
           // Include all possible responses from client side custom characters
-          customCharacters.map(character => {
+          customCharacters.forEach(character => {
             const hasCharacterInResults = results.find(c => c.id === character.id)
             if (!hasCharacterInResults) {
               if (character.name.includes(nameStartsWith)) {
@@ -133,7 +133,7 @@ export const character = {
       const hasBeenUpdatedBefore = (customCharacters.filter(character => character.id === payload.id).length > 0)
 
       if (hasBeenUpdatedBefore) {
-        customCharacters.filter((character, key) => {
+        customCharacters.forEach((character, key) => {
           if (character.id === updatedCharacter.id) {
             customCharacters.splice(key, 1)
           }
