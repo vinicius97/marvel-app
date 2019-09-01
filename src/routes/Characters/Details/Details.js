@@ -16,25 +16,25 @@ export function Details ({ character }) {
   const thumbnailSrc = thumbnail && `${thumbnail.path}.${thumbnail.extension}`
 
   return (
-    <div className={`${prefix}-details`}>
-      <div className={`${prefix}-details__header`}>
+    <div className={`${prefix}-character-details`}>
+      <div className={`${prefix}-character-details__header`}>
         <Card thumbnail={thumbnailSrc} title={name} />
       </div>
 
-      <div className={`${prefix}-details__edit`}>
+      <div className={`${prefix}-character-details__edit`}>
         <Link
-          className={`${prefix}-details__edit__button`}
+          className={`${prefix}-character-details__edit__button`}
           to={`${CharactersRoutes.edit.replace(':id', id)}`}
         >
           Editar
         </Link>
       </div>
 
-      <div className={`${prefix}-details__section`}>
+      <div className={`${prefix}-character-details__section`}>
         Séries com o personagem
       </div>
 
-      <div className={`${prefix}-details__series`}>
+      <div className={`${prefix}-character-details__series`}>
         <ul>
           {series && series.items.map((serie, key) => (
             <li key={key}>
