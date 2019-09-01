@@ -22,6 +22,11 @@ class ListContainer extends PureComponent {
     this.props.find({ nameStartsWith, offset })
   }
 
+  handleResetSearch = () => {
+    this.props.setSearchKey('')
+    this.loadCharactersList()
+  }
+
   handleChangePage = (offset) => {
     this.loadCharactersList(null, offset)
   }
@@ -58,6 +63,7 @@ class ListContainer extends PureComponent {
           total={total}
           characters={list}
           onSearch={this.loadCharactersList}
+          onResetSearch={this.handleResetSearch}
           onNextPage={this.handleChangePage}
           onPreviousPage={this.handleChangePage} />
       </>
@@ -71,8 +77,9 @@ const mapState = state => ({
   loading: state.character.loading
 })
 
-const mapDispatch = ({ character: { find } }) => ({
-  find
+const mapDispatch = ({ character: { find, setSearchKey } }) => ({
+  find,
+  setSearchKey
 })
 
 export default connect(mapState, mapDispatch)(ListContainer)

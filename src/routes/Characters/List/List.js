@@ -12,13 +12,15 @@ import { Card, Paginator, Search } from '../../../components'
 // Styles
 import './List.scss'
 
-export function List ({ characters, onSearch, onNextPage, onPreviousPage, total }) {
+export function List ({ characters, onSearch, onResetSearch, onNextPage, onPreviousPage, total }) {
+  const hasCharacters = (characters.length > 0)
+
   return (
     <div className={`${prefix}-characters-list`}>
-      <Search onSearch={onSearch} />
+      <Search onSearch={onSearch} onResetSearch={onResetSearch} />
 
       <div className={`${prefix}-characters-list__cards`}>
-        {characters.map((item, key) => {
+        {hasCharacters && characters.map((item, key) => {
           const { thumbnail, name, id, series } = item
           const properties = {
             thumbnail: `${thumbnail.path}.${thumbnail.extension}`,
@@ -33,6 +35,10 @@ export function List ({ characters, onSearch, onNextPage, onPreviousPage, total 
             </Link>
           )
         })}
+
+        {!hasCharacters && (
+          'Não há resultados disponíveis para sua busca'
+        )}
       </div>
 
       <Paginator
@@ -47,7 +53,11 @@ export function List ({ characters, onSearch, onNextPage, onPreviousPage, total 
 
 List.defaultProps = {
   characters: [],
-  total: 0
+  total: 0,
+  onSearch: () => {},
+  onResetSearch: () => {},
+  onNextPage: () => {},
+  onPreviousPage: () => {}
 }
 
 export default List

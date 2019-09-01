@@ -7,11 +7,16 @@ import './Search.scss'
 // Assets
 import SearchIcon from '../../assets/images/search.svg'
 
-export const Search = ({ onSearch }) => {
+export const Search = ({ onSearch, onResetSearch }) => {
   const [searchValue, setSearchValue] = useState('')
   const handleKeyPress = (event) => {
     if (event.key === 'Enter') {
-      onSearch(searchValue)
+      // Check for reset page search key
+      if (searchValue !== null && searchValue !== '') {
+        onSearch(searchValue)
+      } else {
+        onResetSearch()
+      }
     }
   }
 
