@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react'
 
 // Constants
 import { prefix } from '../../../constants/Components'
-
+import { formErrorMessages } from '../../../constants/ErrorMessages'
 // Styles
 import './Form.scss'
 
@@ -11,21 +11,66 @@ class Form extends PureComponent {
     formData: {
       name: '',
       description: ''
-    }
+    },
+    errorMessages: []
+  }
+
+  static fieldNames = {
+    name: 'nome',
+    description: 'descrição'
+  }
+
+  static defaultProps = {
+    character: {
+      name: '',
+      description: ''
+    },
+    onSubmit: () => {}
+  }
+
+  handleEmptyErrorMessages = () => {
+    this.setState({
+      errorMessages: []
+    })
+  }
+
+  handleErrorMessage = (message) => {
+    this.setState(
+      state => ({
+        errorMessages: [ ...state.errorMessages, message ]
+      })
+    )
   }
 
   handleFormChange = (e) => {
     e.persist()
 
-    const { name, value } = e.target
+    let { name, value } = e.target
+
     this.setState(
       state => ({
         formData: {
           ...state.formData,
-            [name]: value
+          [name]: value
         }
       })
     )
+  }
+
+  handleFormDataValidation = (formData) => {
+    const { name, description } = formData
+    this.handleEmptyErrorMessages()
+
+    if(name === '' || name === null) {
+      this.handleErrorMessage(formErrorMessages(Form.fieldNames.name).emptyField)
+      return false
+    }
+    if(description === '' || name === description) {
+      this.handleErrorMessage(formErrorMessages(Form.fieldNames.description).emptyField)
+      return false
+    }
+
+    return true
   }
 
   handleLoadFormData = (formData) => {
@@ -35,7 +80,11 @@ class Form extends PureComponent {
   }
 
   handleSubmitForm = () => {
-    this.props.onSubmit(this.state.formData)
+    const formData = this.state.formData
+    const isValid = this.handleFormDataValidation(formData)
+    if (isValid) {
+      this.props.onSubmit(formData)
+    }
   }
 
   componentDidMount () {
@@ -44,13 +93,14 @@ class Form extends PureComponent {
   }
 
   render () {
-    const { formData } = this.state
+    const { formData, errorMessages } = this.state
 
     return (
       <form className={`${prefix}-character-form`}>
         <h2 className={`${prefix}-character-form__title`}>
           Formulário de edição
         </h2>
+        {errorMessages.map(message => message)}
         <input
           className={`${prefix}-character-form__input`}
           onChange={this.handleFormChange}
