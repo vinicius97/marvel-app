@@ -114,6 +114,7 @@ export const character = {
       // Check if character has been edited on client side
       if (customCharacter) {
         this.setActualCharacter(customCharacter)
+        this.setLoading(false)
       } else {
         characterService.get(id)
           .then(({ data }) => {
