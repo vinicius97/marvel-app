@@ -83,19 +83,24 @@ export class Paginator extends PureComponent {
   }
 
   render () {
-    const { page } = this.state
+    const { page, totalPages } = this.state
+    const actualPage = page + 1
 
     return (
       <div className={`${prefix}-paginator`}>
-        <div className={`${prefix}-paginator__nav-button`} onClick={this.handlePreviousPage} role='button'>
-          Anterior
-        </div>
+        {(actualPage > 1) && (
+          <div className={`${prefix}-paginator__nav-button`} onClick={this.handlePreviousPage} role='button'>
+            Anterior
+          </div>
+        )}
         <div className={`${prefix}-paginator__actual-page`}>
-          {page + 1}
+          {actualPage}
         </div>
-        <div className={`${prefix}-paginator__nav-button`} onClick={this.handleNextPage} role='button'>
-          Próxima
-        </div>
+        {(actualPage < totalPages) && (
+          <div className={`${prefix}-paginator__nav-button`} onClick={this.handleNextPage} role='button'>
+            Próxima
+          </div>
+        )}
       </div>
     )
   }
