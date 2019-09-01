@@ -22,7 +22,7 @@ class FormContainer extends PureComponent {
 
   handleOnSave = (data) => {
     this.props.update(data)
-    this.props.history.push(CharactersRoutes.list)
+    this.props.history.push(CharactersRoutes.details.replace(':id', data.id))
   }
 
   static getDerivedStateFromProps (nextProps, prevState) {
