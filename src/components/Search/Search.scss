@@ -1,6 +1,7 @@
 @import "../../variables";
 
 .#{$prefix}-search {
+  position: relative;
   display: flex;
   margin: 30px;
   align-items: center;
@@ -17,11 +18,29 @@
   }
 
   &__button {
-    background-color: rgba(255,255,255,0.15);
-    width: 20px;
-    padding: 9px;
-    &__img {
-      width: 100%;
+    &--reset {
+      background-color: rgba(255,255,255,0.15);
+      color: $color-100;
+      width: 32px;
+      height: 42px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 5px;
+      margin-left: -42px;
+      cursor: pointer;
+
+      &:hover {
+        background-color: $color-300;
+      }
+    }
+    &--submit {
+      background-color: rgba(255,255,255,0.15);
+      width: 20px;
+      padding: 9px;
+      &__img {
+        width: 100%;
+      }
     }
   }
 }
