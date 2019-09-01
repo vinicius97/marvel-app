@@ -1,6 +1,9 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 
+// Constants
+import { CharactersRoutes } from '../../../constants/Routes'
+
 // Component
 import Form from './Form'
 
@@ -19,6 +22,7 @@ class FormContainer extends PureComponent {
 
   handleOnSave = (data) => {
     this.props.update(data)
+    this.props.history.push(CharactersRoutes.list)
   }
 
   static getDerivedStateFromProps (nextProps, prevState) {
