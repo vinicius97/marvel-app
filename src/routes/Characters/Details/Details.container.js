@@ -12,11 +12,16 @@ class DetailsContainer extends PureComponent {
   }
 
   static defaultProps = {
-    character: {}
+    character: {},
+    history: []
   }
 
   loadCharacterDetails = (id) => {
     this.props.findById({ id })
+  }
+
+  handleNavigateTo = (location) => {
+    this.props.history.push(location)
   }
 
   static getDerivedStateFromProps (nextProps, prevState) {
@@ -44,7 +49,7 @@ class DetailsContainer extends PureComponent {
     return character && (
       <>
         <Loader show={loading} />
-        <Details character={character} />
+        <Details character={character} navigateTo={this.handleNavigateTo} />
       </>
     )
   }

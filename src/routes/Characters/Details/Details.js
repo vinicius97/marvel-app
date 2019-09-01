@@ -1,5 +1,4 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 
 // Components
 import { Card } from '../../../components'
@@ -11,30 +10,32 @@ import { prefix } from '../../../constants/Components'
 // Styles
 import './Details.scss'
 
-export function Details ({ character }) {
+export function Details ({ character, navigateTo }) {
   const { thumbnail, name, series, id } = character
   const thumbnailSrc = thumbnail && `${thumbnail.path}.${thumbnail.extension}`
 
   return (
     <div className={`${prefix}-character-details`}>
-      <Link
+      <div
         className={`${prefix}-character-details__edit__button--back`}
-        to={`${CharactersRoutes.list}`}
+        onClick={() => navigateTo(CharactersRoutes.list)}
+        role='button'
       >
         Voltar
-      </Link>
+      </div>
 
       <div className={`${prefix}-character-details__header`}>
         <Card thumbnail={thumbnailSrc} title={name} />
       </div>
 
       <div className={`${prefix}-character-details__edit`}>
-        <Link
+        <div
           className={`${prefix}-character-details__edit__button--edit`}
-          to={`${CharactersRoutes.edit.replace(':id', id)}`}
+          onClick={() => navigateTo(`${CharactersRoutes.edit.replace(':id', id)}`)}
+          role='button'
         >
           Editar
-        </Link>
+        </div>
       </div>
 
       <div className={`${prefix}-character-details__section`}>
@@ -52,6 +53,11 @@ export function Details ({ character }) {
       </div>
     </div>
   )
+}
+
+Details.defaultProps = {
+  character: [],
+  navigateTo: () => {}
 }
 
 export default Details
