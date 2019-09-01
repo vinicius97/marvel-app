@@ -5,6 +5,7 @@ const initialState = {
   actual: null,
   list: [],
   customCharacters: [],
+  searchKey: null,
   total: 0
 }
 
@@ -20,6 +21,9 @@ export const character = {
     setList (state, payload) {
       return { ...state, list: payload }
     },
+    setSearchKey (state, payload) {
+      return { ...state, searchKey: payload }
+    },
     setCustomCharacter (state, payload) {
       return { ...state, customCharacters: [...state.customCharacters, payload] }
     }
@@ -32,6 +36,15 @@ export const character = {
         parameters = {
           ...parameters,
           nameStartsWith
+        }
+        this.setSearchKey(nameStartsWith)
+      } else {
+        const searchKey = rootState.character.searchKey
+        if (searchKey) {
+          parameters = {
+            ...parameters,
+            nameStartsWith: searchKey
+          }
         }
       }
 
@@ -46,8 +59,6 @@ export const character = {
         .then(({ data }) => {
           const results = data.data.results
           const total = data.data.total
-
-          console.log(total, 'total')
 
           this.setTotalCharacteres(total)
 
