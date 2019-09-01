@@ -2,6 +2,7 @@
 
 .#{$prefix}-card {
   background-color: $color-100;
+  cursor: pointer;
   display: flex;
   flex-direction: column;
   flex-flow: column-reverse;

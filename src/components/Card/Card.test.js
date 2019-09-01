@@ -4,6 +4,7 @@ import { Card } from './Card'
 
 // Constants
 import { prefix } from '../../constants/Components'
+import { CharactersRoutes } from '../../constants/Routes'
 
 describe('[Component][Card]', () => {
   const wrap = mount(<Card />)
@@ -38,5 +39,16 @@ describe('[Component][Card]', () => {
     // render title
     expect(wrap.find(`.${prefix}-card__title`)).toBeDefined()
     expect(wrap.find(`.${prefix}-card__title`).text()).toEqual(customProperties.title)
+  })
+
+  it('execute onClick action', () => {
+    const navigateTo = jest.fn().mockImplementation(value => value)
+    const detailsRoute = CharactersRoutes.edit.replace(':id', 123456)
+
+    wrap.setProps({ onClick: navigateTo })
+    wrap.find(`.${prefix}-card`).simulate('click')
+
+    expect(navigateTo).toHaveBeenCalled()
+    expect(navigateTo.mock.calls[0][0] === detailsRoute)
   })
 })

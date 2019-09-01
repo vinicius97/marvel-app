@@ -1,5 +1,4 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 
 // Constants
 import { defaultRequestParameters } from '../../../constants/Endpoints'
@@ -12,7 +11,8 @@ import { Card, Paginator, Search } from '../../../components'
 // Styles
 import './List.scss'
 
-export function List ({ characters, onSearch, onResetSearch, onNextPage, onPreviousPage, total }) {
+export function List (props) {
+  const { characters, onSearch, onResetSearch, onNextPage, onPreviousPage, onNavigateTo, total } = props
   const hasCharacters = (characters.length > 0)
 
   return (
@@ -30,9 +30,11 @@ export function List ({ characters, onSearch, onResetSearch, onNextPage, onPrevi
           }
 
           return (
-            <Link to={`${CharactersRoutes.details.replace(':id', id)}`} key={key}>
-              <Card {...properties} />
-            </Link>
+            <Card
+              {...properties}
+              onClick={() => onNavigateTo(`${CharactersRoutes.details.replace(':id', id)}`)}
+              key={key}
+            />
           )
         })}
 
@@ -54,6 +56,7 @@ export function List ({ characters, onSearch, onResetSearch, onNextPage, onPrevi
 List.defaultProps = {
   characters: [],
   total: 0,
+  onNavigateTo: () => {},
   onSearch: () => {},
   onResetSearch: () => {},
   onNextPage: () => {},

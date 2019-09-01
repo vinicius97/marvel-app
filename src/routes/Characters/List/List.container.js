@@ -27,6 +27,10 @@ class ListContainer extends PureComponent {
     this.loadCharactersList()
   }
 
+  handleNavigateTo = (location) => {
+    this.props.history.push(location)
+  }
+
   handleChangePage = (offset) => {
     this.loadCharactersList(null, offset)
   }
@@ -62,6 +66,7 @@ class ListContainer extends PureComponent {
         <List
           total={total}
           characters={list}
+          onNavigateTo={this.handleNavigateTo}
           onSearch={this.loadCharactersList}
           onResetSearch={this.handleResetSearch}
           onNextPage={this.handleChangePage}
