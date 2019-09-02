@@ -14,7 +14,7 @@ jobs:
     steps:
       - checkout
       - attach_workspace:
-          at: /home/circleci
+          at: /home/circleci/marvel-app
       - run:
           name: Install
           command: npm install
