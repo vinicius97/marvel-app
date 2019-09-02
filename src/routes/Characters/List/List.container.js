@@ -9,16 +9,25 @@ class ListContainer extends PureComponent {
   state = {
     list: [],
     total: 0,
-    loading: false
+    loading: false,
+    searchKey: '',
+    page: 0
   }
 
   static defaultProps = {
     list: [],
     total: 0,
-    loading: false
+    loading: false,
+    searchKey: ''
   }
 
   loadCharactersList = (nameStartsWith = null, offset = null) => {
+    if(nameStartsWith !== this.state.searchKey) {
+      this.setState({
+        page: 0
+      })
+    }
+
     this.props.find({ nameStartsWith, offset })
   }
 
@@ -31,8 +40,11 @@ class ListContainer extends PureComponent {
     this.props.history.push(location)
   }
 
-  handleChangePage = (offset) => {
+  handleChangePage = (offset, page) => {
     this.loadCharactersList(null, offset)
+    this.setState({
+      page
+    })
   }
 
   static getDerivedStateFromProps (nextProps, prevState) {
@@ -50,6 +62,10 @@ class ListContainer extends PureComponent {
       state.loading = nextProps.loading
     }
 
+    if (prevState.searchKey !== prevState.searchKey) {
+      state.searchKey = nextProps.searchKey
+    }
+
     return state
   }
 
@@ -58,7 +74,7 @@ class ListContainer extends PureComponent {
   }
 
   render () {
-    const { list, total, loading } = this.state
+    const { list, total, loading, page } = this.state
 
     return (
       <>
@@ -66,6 +82,7 @@ class ListContainer extends PureComponent {
         <List
           total={total}
           characters={list}
+          page={page}
           onNavigateTo={this.handleNavigateTo}
           onSearch={this.loadCharactersList}
           onResetSearch={this.handleResetSearch}
@@ -79,7 +96,8 @@ class ListContainer extends PureComponent {
 const mapState = state => ({
   list: state.character.list,
   total: state.character.total,
-  loading: state.character.loading
+  loading: state.character.loading,
+  searchKey: state.character.searchKey
 })
 
 const mapDispatch = ({ character: { find, setSearchKey } }) => ({

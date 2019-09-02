@@ -36,7 +36,7 @@ export class Paginator extends PureComponent {
       page: nextPage
     })
 
-    this.props.onNextPage(offset)
+    this.props.onNextPage(offset, nextPage)
   }
 
   handlePreviousPage = async () => {
@@ -53,7 +53,7 @@ export class Paginator extends PureComponent {
       page: previousPage
     })
 
-    this.props.onPreviousPage(offset)
+    this.props.onPreviousPage(offset, previousPage)
   }
 
   handleProperties = () => {
@@ -73,6 +73,10 @@ export class Paginator extends PureComponent {
     if (prevState.total !== nextProps.total) {
       state.total = nextProps.total
       state.totalPages = Math.ceil(nextProps.total/nextProps.limit)
+    }
+
+    if (prevState.page !== nextProps.page) {
+      state.page = nextProps.page
     }
 
     return state

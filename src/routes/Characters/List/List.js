@@ -12,7 +12,7 @@ import { Card, Paginator, Search } from '../../../components'
 import './List.scss'
 
 export function List (props) {
-  const { characters, onSearch, onResetSearch, onNextPage, onPreviousPage, onNavigateTo, total } = props
+  const { characters, onSearch, onResetSearch, onNextPage, onPreviousPage, onNavigateTo, page, total } = props
   const hasCharacters = (characters.length > 0)
 
   return (
@@ -44,10 +44,11 @@ export function List (props) {
       </div>
 
       <Paginator
-        onNextPage={onNextPage}
-        onPreviousPage={onPreviousPage}
         limit={defaultRequestParameters.limit}
         total={total}
+        page={page}
+        onNextPage={onNextPage}
+        onPreviousPage={onPreviousPage}
       />
     </div>
   )
