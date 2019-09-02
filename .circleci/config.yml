@@ -16,7 +16,7 @@ jobs:
           at: /home/circleci/marvel-app
       - run:
           name: Install
-          command: npm install
+          command: cd marvel-app && npm install
       - run:
           name: Build
           command: npm run build
@@ -28,7 +28,7 @@ jobs:
           at: /home/circleci/marvel-app
       - run:
           name: Install npm
-          command: npm install
+          command: cd marvel-app && npm install
       - run:
           name: Run tests
           command: npm test
@@ -41,7 +41,7 @@ jobs:
           at: /home/circleci/marvel-app
       - run:
           name: Install
-          command: npm install
+          command: cd marvel-app && npm install
       - run:
           name: Build
           command: npm run build
