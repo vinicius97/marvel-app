@@ -1,7 +1,5 @@
 ## Variaveis que devem ser configuradas no projeto CircleCI  ##
-# AWS_ACCESS_KEY_ID
-# AWS_SECRET_ACCESS_KEY
-# AWS_BUCKET
+# FIREBASE_TOKEN
 
 version: 2.1
 
@@ -10,10 +8,6 @@ executors:
     docker:
       - image: node:8.15.1-jessie
     working_directory: /home/circleci
-    environment:
-      AWS_REGION: us-east-1
-      AWS_DEFAULT_FORMAT: text
-
 jobs:
   build:
     executor: nodejs
@@ -37,13 +31,10 @@ jobs:
           name: Run tests
           command: npm test
 
-  deploy_aws:
+  deploy:
     executor: nodejs
     steps:
       - checkout
-      - aws_cli:
-          access_key_id: AWS_ACCESS_KEY_ID
-          access_key_secret: AWS_SECRET_ACCESS_KEY
       - attach_workspace:
           at: /home/circleci/marvel-app
       - run:
@@ -53,10 +44,11 @@ jobs:
           name: Build
           command: npm run build
       - run:
-          name: Upload to S3
-          command: |
-             LATEST_DIRECTORY="s3://${AWS_BUCKET}/latest"
-             aws s3 sync ./build ${LATEST_DIRECTORY} --delete --acl public-read ;
+          name: Install Firebase Tools
+          command: npm install --prefix=./firebase-deploy firebase-tools
+      - run:
+          name: Deploy to Firebase
+          command: ./firebase-deploy/node_modules/.bin/firebase deploy --token=${FIREBASE_TOKEN}
 
 workflows:
   version: 2.1
