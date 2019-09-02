@@ -58,7 +58,7 @@ workflows:
       - tests:
           requires:
               - build
-      - deploy_aws:
+      - deploy:
           filters:
             branches:
               only:
