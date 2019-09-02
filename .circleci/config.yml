@@ -32,11 +32,11 @@ jobs:
   tests:
     executor: nodejs
     steps:
+      - checkout
       - restore_cache:
           keys:
             - v1-npm-deps-{{ checksum "package-lock.json" }}
             - v1-npm-deps-
-      - checkout
       - attach_workspace:
           at: /home/circleci/marvel-app
       - run:
@@ -82,7 +82,7 @@ workflows:
               - build
       - deploy:
           requires:
-            - tests
+              - tests
           filters:
             branches:
               only:
