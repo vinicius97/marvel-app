@@ -1,0 +1,75 @@
+## Variaveis que devem ser configuradas no projeto CircleCI  ##
+# AWS_ACCESS_KEY_ID
+# AWS_SECRET_ACCESS_KEY
+# AWS_BUCKET
+
+version: 2.1
+
+executors:
+  nodejs:
+    docker:
+      - image: node:8.15.1-jessie
+    working_directory: /home/circleci
+    environment:
+      AWS_REGION: us-east-1
+      AWS_DEFAULT_FORMAT: text
+
+jobs:
+  build:
+    executor: nodejs
+    steps:
+      - run:
+          name: Install
+          command: npm install
+      - run:
+          name: Build
+          command: npm run build
+  tests:
+    executor: nodejs
+    steps:
+      - checkout
+      - attach_workspace:
+          at: /home/circleci/marvel-app
+      - run:
+          name: Install npm
+          command: npm install
+      - run:
+          name: Run tests
+          command: npm test
+
+  deploy_aws:
+    executor: nodejs
+    steps:
+      - checkout
+      - aws_cli:
+          access_key_id: AWS_ACCESS_KEY_ID
+          access_key_secret: AWS_SECRET_ACCESS_KEY
+      - attach_workspace:
+          at: /home/circleci/marvel-app
+      - run:
+          name: Install
+          command: npm install
+      - run:
+          name: Build
+          command: npm run build
+      - run:
+          name: Upload to S3
+          command: |
+             LATEST_DIRECTORY="s3://${AWS_BUCKET}/latest"
+             aws s3 sync ./build ${LATEST_DIRECTORY} --delete --acl public-read ;
+
+workflows:
+  version: 2.1
+  marvel-app:
+    jobs:
+      - build
+      - tests:
+          requires:
+              - build
+      - deploy_aws:
+          filters:
+            branches:
+              only:
+                - master
+          requires:
+            - tests
