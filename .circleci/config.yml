@@ -12,6 +12,8 @@ jobs:
   build:
     executor: nodejs
     steps:
+      - attach_workspace:
+          at: /home/circleci
       - run:
           name: Install
           command: cd marvel-app && npm install
@@ -22,6 +24,8 @@ jobs:
     executor: nodejs
     steps:
       - checkout
+      - attach_workspace:
+          at: /home/circleci
       - run:
           name: Install npm
           command: cd marvel-app && npm install
@@ -33,6 +37,8 @@ jobs:
     executor: nodejs
     steps:
       - checkout
+      - attach_workspace:
+          at: /home/circleci
       - run:
           name: Install
           command: cd marvel-app && npm install
