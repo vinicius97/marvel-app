@@ -14,9 +14,12 @@
   }
 
   &__nav-button {
-    background-color: $color-300;
-    color: $color-100;
-    cursor: pointer;
-    padding: 10px;
+    &--previous,
+    &--next {
+      background-color: $color-300;
+      color: $color-100;
+      cursor: pointer;
+      padding: 10px;
+    }
   }
 }

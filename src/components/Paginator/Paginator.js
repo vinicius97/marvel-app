@@ -89,7 +89,7 @@ export class Paginator extends PureComponent {
     return (
       <div className={`${prefix}-paginator`}>
         {(actualPage > 1) && (
-          <div className={`${prefix}-paginator__nav-button`} onClick={this.handlePreviousPage} role='button'>
+          <div className={`${prefix}-paginator__nav-button--previous`} onClick={this.handlePreviousPage} role='button'>
             Anterior
           </div>
         )}
@@ -97,7 +97,7 @@ export class Paginator extends PureComponent {
           {actualPage}
         </div>
         {(actualPage < totalPages) && (
-          <div className={`${prefix}-paginator__nav-button`} onClick={this.handleNextPage} role='button'>
+          <div className={`${prefix}-paginator__nav-button--next`} onClick={this.handleNextPage} role='button'>
             Próxima
           </div>
         )}

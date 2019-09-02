@@ -33,7 +33,7 @@ export const character = {
 
     return http.get(characterConstants(id).details, queryParameters)
       .then(({ data }) => {
-        return data.data.results
+        return data.data.results[0]
       })
       .catch(e => {
         throw e
