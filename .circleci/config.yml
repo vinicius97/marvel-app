@@ -26,33 +26,13 @@ jobs:
     steps:
       - checkout
       - attach_workspace:
-          at: /home/circleci
+          at: /home/circleci/marvel-app
       - run:
           name: Install npm
           command: npm install
       - run:
           name: Run tests
           command: npm test
-
-  deploy:
-    executor: nodejs
-    steps:
-      - checkout
-      - attach_workspace:
-          at: /home/circleci
-      - run:
-          name: Install
-          command: npm install
-      - run:
-          name: Build
-          command: npm run build
-      - run:
-          name: Install Firebase Tools
-          command: npm install --prefix=./firebase-deploy firebase-tools
-      - run:
-          name: Deploy to Firebase
-          command: ./firebase-deploy/node_modules/.bin/firebase deploy --token=${FIREBASE_TOKEN}
-
 workflows:
   version: 2.1
   marvel-app:
