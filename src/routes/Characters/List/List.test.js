@@ -7,7 +7,6 @@ import { Paginator, Search } from '../../../components'
 
 // Constants
 import { prefix } from '../../../constants/Components'
-import { CharactersRoutes } from '../../../constants/Routes'
 
 // Data
 import CharacterMock from '../../../services/Character/Character.mock'

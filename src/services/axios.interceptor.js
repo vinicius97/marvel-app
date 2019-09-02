@@ -3,7 +3,7 @@ import axios from 'axios'
 // Constants
 import { marvel } from '../constants/Keys'
 
-let instance = axios.create()
+const instance = axios.create()
 
 instance.interceptors.request.use((config) => {
   const apikey = marvel.public
