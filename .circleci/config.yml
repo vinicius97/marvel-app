@@ -41,10 +41,3 @@ workflows:
       - tests:
           requires:
               - build
-      - deploy:
-          filters:
-            branches:
-              only:
-                - master
-          requires:
-            - tests
