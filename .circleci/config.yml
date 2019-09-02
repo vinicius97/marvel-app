@@ -54,9 +54,9 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-        keys:
-          - v1-npm-deps-{{ checksum "package-lock.json" }}
-          - v1-npm-deps-
+          keys:
+            - v1-npm-deps-{{ checksum "package-lock.json" }}
+            - v1-npm-deps-
       - attach_workspace:
           at: /home/circleci/marvel-app
       - run:
