@@ -12,6 +12,7 @@ jobs:
   build:
     executor: nodejs
     steps:
+      - checkout
       - attach_workspace:
           at: /home/circleci
       - run:
