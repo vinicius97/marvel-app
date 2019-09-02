@@ -19,7 +19,7 @@ jobs:
           command: cd marvel-app && npm install
       - run:
           name: Build
-          command: npm run build
+          command: cd marvel-app && npm run build
   tests:
     executor: nodejs
     steps:
@@ -44,13 +44,13 @@ jobs:
           command: cd marvel-app && npm install
       - run:
           name: Build
-          command: npm run build
+          command: cd marvel-app && npm run build
       - run:
           name: Install Firebase Tools
-          command: npm install --prefix=./firebase-deploy firebase-tools
+          command: cd marvel-app && npm install --prefix=./firebase-deploy firebase-tools
       - run:
           name: Deploy to Firebase
-          command: ./firebase-deploy/node_modules/.bin/firebase deploy --token=${FIREBASE_TOKEN}
+          command: cd marvel-app && ./firebase-deploy/node_modules/.bin/firebase deploy --token=${FIREBASE_TOKEN}
 
 workflows:
   version: 2.1
