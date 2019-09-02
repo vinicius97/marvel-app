@@ -1,5 +1,5 @@
 // Services
-import { character as characterService } from '../services'
+import { character as characterService } from '../services/Character'
 
 const initialState = {
   actual: null,
@@ -16,8 +16,8 @@ export const character = {
     setActualCharacter (state, payload) {
       return { ...state, actual: payload }
     },
-    setTotalCharacteres (state, payload) {
-      return { ...state, total: payload}
+    setTotalCharacters (state, payload) {
+      return { ...state, total: payload }
     },
     setList (state, payload) {
       return { ...state, list: payload }
@@ -60,50 +60,42 @@ export const character = {
         }
       }
 
-      characterService.list(parameters)
-        .then(({ data }) => {
-          const results = data.data.results
-          const total = data.data.total
+      const list = await characterService.list(parameters)
+      this.setTotalCharacters(list.total)
 
-          this.setTotalCharacteres(total)
+      // Replace if any character has already been edited on client side
+      const customCharacters = rootState.character.customCharacters
+      const customResults = list.results.reduce((result, character) => {
+        const customCharacter = customCharacters.find(custom => (custom.id === character.id))
 
-          // Replace if any character has already been edited on client side
-          const customCharacters = rootState.character.customCharacters
-          const customResults = results.reduce((result, character) => {
-            const customCharacter = customCharacters.find(custom => (custom.id === character.id))
-
-            if (customCharacter) {
-              // Check if custom character match with search term
-              if (nameStartsWith) {
-                if (customCharacter.name.includes(nameStartsWith)) {
-                  result.push(customCharacter)
-                }
-              } else {
-                result.push(customCharacter)
-              }
-            } else {
-              result.push(character)
+        if (customCharacter) {
+          // Check if custom character match with search term
+          if (nameStartsWith) {
+            if (customCharacter.name.includes(nameStartsWith)) {
+              result.push(customCharacter)
             }
+          } else {
+            result.push(customCharacter)
+          }
+        } else {
+          result.push(character)
+        }
 
-            return result
-          }, [])
+        return result
+      }, [])
 
-          // Include all possible responses from client side custom characters
-          customCharacters.forEach(character => {
-            const hasCharacterInResults = results.find(c => c.id === character.id)
-            if (!hasCharacterInResults) {
-              if (character.name.includes(nameStartsWith)) {
-                customResults.push(character)
-              }
-            }
-          })
+      // Include all possible responses from client side custom characters
+      customCharacters.forEach(character => {
+        const hasCharacterInResults = list.results.find(c => c.id === character.id)
+        if (!hasCharacterInResults) {
+          if (character.name.includes(nameStartsWith)) {
+            customResults.push(character)
+          }
+        }
+      })
 
-          this.setList(customResults)
-        })
-        .catch(e => console.error(e))
-        .finally(() => {
-          this.setLoading(false)
-        })
+      this.setList(customResults)
+      this.setLoading(false)
     },
     async findById ({ id }, rootState) {
       this.setLoading(true)
@@ -116,15 +108,9 @@ export const character = {
         this.setActualCharacter(customCharacter)
         this.setLoading(false)
       } else {
-        characterService.get(id)
-          .then(({ data }) => {
-            const results = data.data.results
-            this.setActualCharacter(results[0])
-          })
-          .catch(e => console.error(e))
-          .finally(() => {
-            this.setLoading(false)
-          })
+        const result = await characterService.findById(id)
+        this.setActualCharacter(result)
+        this.setLoading(false)
       }
     },
     async update (payload, rootState) {

@@ -1,25 +1,26 @@
-import mockAxios from 'axios'
+import MockAdapter from 'axios-mock-adapter'
+
 import { character as characterService } from './Character'
-import { character as characterEndpoint, defaultRequestParameters } from '../../constants/Endpoints'
+import { character as characterEndpoint } from '../../constants/Endpoints'
+import { http } from '../../services/axios.interceptor'
 
-describe('[Characters]: All scopes', () => {
-  afterEach(() => {
-    // cleaning up the mess left behind the previous test
-    mockAxios.reset()
-  })
+const mockAxios = new MockAdapter(http)
 
-  it('[CharactersService]: fetches data with limit and offset', async () => {
+describe('[Characters]', () => {
+  it('fetches list characters with limit and offset', async () => {
+    const response = {
+      data: {
+        results: [],
+        total: 0
+      }
+    }
+
+    mockAxios.onGet(characterEndpoint().list).reply(200, response)
+
     const fetchCharacters = characterService.list
-    fetchCharacters()
-      .then(response => {
-        expect(response).toEqual({
-          data: {}
-        })
+    await fetchCharacters()
+      .then(result => {
+        expect(result).toEqual({ results: [], total: 0 })
       })
-
-    expect(mockAxios.get).toHaveBeenCalledWith(
-      characterEndpoint().list, { params: defaultRequestParameters }
-    )
-    expect(mockAxios.get).toHaveBeenCalledTimes(1)
   })
 })

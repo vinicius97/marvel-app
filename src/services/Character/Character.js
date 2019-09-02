@@ -5,7 +5,7 @@ import { http } from '../axios.interceptor'
 import { character as characterConstants, defaultRequestParameters } from '../../constants/Endpoints'
 
 export const character = {
-  list: (parameters = {}) => {
+  list: async (parameters = {}) => {
     const queryParameters = {
       params: {
         ...defaultRequestParameters,
@@ -14,8 +14,17 @@ export const character = {
     }
 
     return http.get(characterConstants().list, queryParameters)
+      .then(({ data }) => {
+        const results = data.data.results
+        const total = data.data.total
+
+        return { results, total }
+      })
+      .catch(e => {
+        throw e
+      })
   },
-  get: (id) => {
+  findById: (id) => {
     const queryParameters = {
       params: {
         id
@@ -23,5 +32,11 @@ export const character = {
     }
 
     return http.get(characterConstants(id).details, queryParameters)
+      .then(({ data }) => {
+        return data.data.results
+      })
+      .catch(e => {
+        throw e
+      })
   }
 }
