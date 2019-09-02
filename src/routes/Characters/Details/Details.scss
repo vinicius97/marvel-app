@@ -26,6 +26,7 @@
     &__button {
       &--back {
         color: $color-100;
+        cursor: pointer;
         background-color: $color-400;
         padding: 10px 15px;
         margin-bottom: 20px;
@@ -42,6 +43,7 @@
 
       &--edit {
         width: 100%;
+        cursor: pointer;
         color: $color-100;
         background-color: $color-200;
         padding: 10px;
