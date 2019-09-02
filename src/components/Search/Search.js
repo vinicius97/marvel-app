@@ -30,6 +30,7 @@ export const Search = ({ onSearch, onResetSearch }) => {
       <input
         className={`${prefix}-search__input`}
         type='text'
+        name='search'
         value={searchValue}
         onKeyPress={handleKeyPress}
         onChange={(e) => setSearchValue(e.target.value)}
