@@ -12,6 +12,8 @@ jobs:
   build:
     executor: nodejs
     steps:
+      - attach_workspace:
+          at: /home/circleci/marvel-app
       - run:
           name: Install
           command: npm install
