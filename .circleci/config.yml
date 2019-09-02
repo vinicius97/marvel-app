@@ -80,7 +80,7 @@ workflows:
       - tests:
           requires:
               - build
-      - deploys:
+      - deploy:
           requires:
             - tests
           filters:
