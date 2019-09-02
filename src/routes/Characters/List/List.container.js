@@ -62,7 +62,7 @@ class ListContainer extends PureComponent {
       state.loading = nextProps.loading
     }
 
-    if (prevState.searchKey !== prevState.searchKey) {
+    if (prevState.searchKey !== nextProps.searchKey) {
       state.searchKey = nextProps.searchKey
     }
 
