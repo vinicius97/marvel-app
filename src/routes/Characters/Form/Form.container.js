@@ -7,13 +7,16 @@ import { CharactersRoutes } from '../../../constants/Routes'
 // Component
 import Form from './Form'
 
-class FormContainer extends PureComponent {
+export class FormContainer extends PureComponent {
   state = {
     character: {}
   }
 
   static defaultProps = {
-    character: {}
+    findById: () => {},
+    update: () => {},
+    character: {},
+    history: []
   }
 
   loadCharacterDetails = (id) => {
