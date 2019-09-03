@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import { Loader } from '../../../components'
 import List from './List'
 
-class ListContainer extends PureComponent {
+export class ListContainer extends PureComponent {
   state = {
     list: [],
     total: 0,
@@ -15,6 +15,8 @@ class ListContainer extends PureComponent {
   }
 
   static defaultProps = {
+    find: () => {},
+    setSearchKey: () => {},
     list: [],
     total: 0,
     loading: false,

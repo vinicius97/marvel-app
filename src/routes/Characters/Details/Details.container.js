@@ -5,15 +5,22 @@ import { connect } from 'react-redux'
 import Details from './Details'
 import { Loader } from '../../../components/Loader'
 
-class DetailsContainer extends PureComponent {
+export class DetailsContainer extends PureComponent {
   state = {
     character: {},
     loading: false
   }
 
   static defaultProps = {
+    findById: () => {},
     character: {},
-    history: []
+    loading: false,
+    history: [],
+    match: {
+      params: {
+        id: null
+      }
+    }
   }
 
   loadCharacterDetails = (id) => {
