@@ -1,5 +1,15 @@
 [![CircleCI](https://circleci.com/gh/vinicius97/marvel-app/tree/master.svg?style=svg)](https://circleci.com/gh/vinicius97/marvel-app/tree/master)
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+[![tested with jest](https://img.shields.io/badge/tested_with-jest-99424f.svg)](https://github.com/facebook/jest) [![jest](https://jestjs.io/img/jest-badge.svg)](https://github.com/facebook/jest)
+
+### Tools
+- Redux and Rematch as redux framework - https://github.com/rematch/rematch
+- Jest and Enzyme for unit and integration testing
+- Firebase as storage of deployed content
+- Axios as request handler
+- React Router as router manager
+- Create React App
+- SASS as CSS pre-processor
 
 ### Style Guides
 For this project consider to use StandardJS as Javascript Code Style Guide and BEM as CSS Code Style Guide
